@@ -9,29 +9,32 @@ import LoadingComponent from "./LoadingComponent";
 const UserListComponent = () => {
   const [error, setError] = useState(null);
   const isLoading = useSelector((state) => state.loading.isLoading);
+  const users = useSelector((state) => state.users.users); //get users from redux store
   const dispatch = useDispatch();
 
-  //get the data upon first render - dependency array must be "[]"
+  //get the users list only if store does not have it already
   useEffect(() => {
-    dispatch(toggleIsLoading());
-    setError(null);
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        if (!response.ok)
-          throw new Error(
-            "Something went wrong while fetching a list of the users"
-          );
-        return response.json();
-      })
-      .then((result) => {
-        dispatch(saveUsers(result));
-        dispatch(toggleIsLoading());
-      })
-      .catch((err) => {
-        setError(err);
-        dispatch(toggleIsLoading());
-      });
-  }, [dispatch]);
+    if (users.length === 0) {
+      dispatch(toggleIsLoading());
+      setError(null);
+      fetch("https://jsonplaceholder.typicode.com/users")
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(
+              "Something went wrong while fetching a list of the users"
+            );
+          return response.json();
+        })
+        .then((result) => {
+          dispatch(saveUsers(result));
+          dispatch(toggleIsLoading());
+        })
+        .catch((err) => {
+          setError(err);
+          dispatch(toggleIsLoading());
+        });
+    }
+  }, [dispatch, users]);
 
   return (
     <div className="container mx-auto bg-gray-900 text-white p-6 rounded-lg">
