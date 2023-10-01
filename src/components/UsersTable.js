@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import UserRow from "./UserRow";
 
 const UsersTable = () => {
-  const users = useSelector((state) => state.users.users);
+  const users = useSelector((state) => state.users.users); //get users from redux store
   const usersPerPage = 5;
 
   return (

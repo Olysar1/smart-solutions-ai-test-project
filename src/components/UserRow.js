@@ -1,7 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 const UserRow = ({ user }) => {
+  const navigate = useNavigate();
   return (
-    <tr key={user.id}>
-      <td className="py-2">{user.name}</td>
+    <tr key={user.id} className="transition duration-500 hover:bg-gray-800">
+      <td
+        className="py-2 cursor-pointer"
+        onClick={() => navigate(`/${user.id}`)}
+      >
+        {user.name}
+      </td>
       <td className="py-2">{user.email}</td>
       <td className="py-2">{user.address.city}</td>
       <td className="py-2">

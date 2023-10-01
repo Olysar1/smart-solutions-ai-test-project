@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveUsers } from "../redux/users/userActions";
+import { saveUsers } from "../redux/users/usersActions";
 import { toggleIsLoading } from "../redux/loading/loadingActions";
 import UsersTable from "./UsersTable";
+import ErrorComponent from "./ErrorComponent";
+import LoadingComponent from "./LoadingComponent";
 
 const UserListComponent = () => {
   const [error, setError] = useState(null);
@@ -36,8 +38,8 @@ const UserListComponent = () => {
       <h2 className="text-2xl font-bold mb-4">
         Welcome to the Users Control Panel!
       </h2>
-      {error && <h1>{error.message}</h1>}
-      {isLoading ? <h1>Loading...</h1> : <UsersTable />}
+      {error && <ErrorComponent message={error.message} />}
+      {isLoading ? <LoadingComponent /> : <UsersTable />}
     </div>
   );
 };

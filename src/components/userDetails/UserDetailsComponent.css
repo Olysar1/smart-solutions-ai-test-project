@@ -1,0 +1,28 @@
+@keyframes swing-and-fall {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(-35deg);
+  }
+  30% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(-30deg);
+  }
+  70% {
+    transform: rotate(5deg);
+  }
+  90% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(-10deg) translateY(20px);
+  }
+}
+
+.falling-letter-animation {
+  display: inline-block;
+  animation: swing-and-fall 2s cubic-bezier(0.4, 0.2, 0.2, 1) forwards;
+}
