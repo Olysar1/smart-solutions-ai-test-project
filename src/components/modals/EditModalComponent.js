@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hideEditModal } from "../../redux/modals/modalsActions";
 import { updateUser } from "../../redux/users/usersActions";
+import { isValid } from "../../utils/validator";
 
 const EditModalComponent = () => {
   const [newName, setNewName] = useState("");
@@ -18,14 +19,29 @@ const EditModalComponent = () => {
 
   //updates the targeted user
   const updateTargetedUser = useCallback(() => {
-    const updatedUser = {
-      ...targetedUser,
-      name: newName,
-      email: newEmail,
-      address: { ...targetedUser.address, city: newCity },
-    };
-    dispatch(updateUser(updatedUser));
-    closeModal();
+    //check for validity of user input and conditionally add them to the new user object
+    if (
+      !isValid("name", newName) ||
+      !isValid("email", newEmail) ||
+      !isValid("city", newCity)
+    ) {
+      alert(`One or more fields are not valid`); // alert if one or more fields are illegal
+    } else if (!newName && !newEmail && !newCity) {
+      alert("Please input information to update or exit editing using 'x'"); // alert if no information is provided
+    } else {
+      const updatedUser = {
+        // copy targeted user and conditionally change updated fields
+        ...targetedUser,
+        ...(newName && isValid("name", newName) && { name: newName }),
+        ...(newEmail && isValid("email", newEmail) && { email: newEmail }),
+        address: {
+          ...targetedUser.address,
+          ...(newCity && isValid("city", newCity) && { city: newCity }),
+        },
+      };
+      dispatch(updateUser(updatedUser));
+      closeModal();
+    }
   }, [newName, newEmail, newCity, targetedUser, closeModal, dispatch]);
 
   //handles closing modal when clicked outside the modal box
@@ -38,7 +54,7 @@ const EditModalComponent = () => {
 
     document.addEventListener("mousedown", handleClickOutside);
 
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside); // cleanup event handler
   }, [dispatch, closeModal]);
 
   return (

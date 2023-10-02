@@ -4,9 +4,20 @@ import { useState } from "react";
 
 const UsersTable = () => {
   const users = useSelector((state) => state.users.users); //get users from redux store
-  const usersPerPage = 5;
+  const usersPerPage = 5; // to utilize pagination we need to show 5 per page (provided api returns only 10 users)
   const [from, setFrom] = useState(0);
   const [to, setTo] = useState(usersPerPage);
+
+  const goPage = (page) => {
+    if (page === "next") {
+      setFrom((prevState) => prevState + usersPerPage);
+      setTo((prevState) => prevState + usersPerPage);
+    }
+    if (page === "prev") {
+      setFrom((prevState) => prevState - usersPerPage);
+      setTo((prevState) => prevState - usersPerPage);
+    }
+  };
 
   return (
     <>
@@ -29,10 +40,7 @@ const UsersTable = () => {
         <button
           className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           disabled={from <= 0}
-          onClick={() => {
-            setFrom((prevState) => prevState - usersPerPage);
-            setTo((prevState) => prevState - usersPerPage);
-          }}
+          onClick={() => goPage("prev")}
         >
           {"<<"}
         </button>
@@ -42,10 +50,7 @@ const UsersTable = () => {
         <button
           className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           disabled={to >= users.length}
-          onClick={() => {
-            setFrom((prevState) => prevState + usersPerPage);
-            setTo((prevState) => prevState + usersPerPage);
-          }}
+          onClick={() => goPage("next")}
         >
           {">>"}
         </button>
