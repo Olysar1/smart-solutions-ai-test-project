@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { showDeleteModal } from "../redux/modals/modalsActions";
+import { showDeleteModal, showEditModal } from "../redux/modals/modalsActions";
 
 const UserRow = ({ user }) => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const UserRow = ({ user }) => {
       <td className="py-2">{user.address.city}</td>
       <td className="py-2">
         <button
-          // onClick={() => dispatch(showEditModal())}
+          onClick={() => dispatch(showEditModal(user))}
           className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 mr-3"
         >
           Edit

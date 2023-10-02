@@ -11,3 +11,10 @@ export const deleteUser = (payload) => {
     payload,
   };
 };
+
+export const updateUser = (payload) => {
+  return {
+    type: "UPDATETARGET",
+    payload,
+  };
+};

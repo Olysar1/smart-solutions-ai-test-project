@@ -6,6 +6,7 @@ import UsersTable from "./UsersTableComponent";
 import ErrorComponent from "./ErrorComponent";
 import LoadingComponent from "./LoadingComponent";
 import DeleteModalComponent from "./modals/DeleteModalComponent";
+import EditModalComponent from "./modals/EditModalComponent";
 
 const UserListComponent = () => {
   const [error, setError] = useState(null);
@@ -51,6 +52,7 @@ const UserListComponent = () => {
       {error && <ErrorComponent message={error.message} />}
       {isLoading ? <LoadingComponent /> : <UsersTable />}
       {deleteModalIsVisible && <DeleteModalComponent />}
+      {editModalIsVisible && <EditModalComponent />}
     </div>
   );
 };

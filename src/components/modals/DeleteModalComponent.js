@@ -23,7 +23,7 @@ const DeleteModalComponent = () => {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
-        dispatch(hideDeleteModal());
+        closeModal();
       }
     };
 
@@ -32,7 +32,7 @@ const DeleteModalComponent = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [dispatch]);
+  }, [dispatch, closeModal]);
 
   return (
     <div className="backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50">
