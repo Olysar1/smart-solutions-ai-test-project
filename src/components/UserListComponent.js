@@ -2,13 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveUsers } from "../redux/users/usersActions";
 import { toggleIsLoading } from "../redux/loading/loadingActions";
-import UsersTable from "./UsersTable";
+import UsersTable from "./UsersTableComponent";
 import ErrorComponent from "./ErrorComponent";
 import LoadingComponent from "./LoadingComponent";
+import DeleteModalComponent from "./modals/DeleteModalComponent";
 
 const UserListComponent = () => {
   const [error, setError] = useState(null);
   const isLoading = useSelector((state) => state.loading.isLoading);
+  const deleteModalIsVisible = useSelector(
+    (state) => state.modals.deleteModalIsVisible
+  );
+  const editModalIsVisible = useSelector(
+    (state) => state.modals.editModalIsVisible
+  );
   const users = useSelector((state) => state.users.users); //get users from redux store
   const dispatch = useDispatch();
 
@@ -43,6 +50,7 @@ const UserListComponent = () => {
       </h2>
       {error && <ErrorComponent message={error.message} />}
       {isLoading ? <LoadingComponent /> : <UsersTable />}
+      {deleteModalIsVisible && <DeleteModalComponent />}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import UserRow from "./UserRow";
+import UserRow from "./UserRowComponent";
 import { useState } from "react";
 
 const UsersTable = () => {

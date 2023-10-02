@@ -4,3 +4,10 @@ export const saveUsers = (payload) => {
     payload,
   };
 };
+
+export const deleteUser = (payload) => {
+  return {
+    type: "DELETETARGET",
+    payload,
+  };
+};

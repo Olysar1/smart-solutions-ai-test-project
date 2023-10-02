@@ -5,7 +5,7 @@ import { toggleIsLoading } from "../../redux/loading/loadingActions";
 import ErrorComponent from "../ErrorComponent";
 import LoadingComponent from "../LoadingComponent";
 import { saveSingleUser } from "../../redux/singleUser/singleUserActions";
-import UserDetailsTable from "./UserDetailsTable";
+import UserDetailsTable from "./UserDetailsTableComponent";
 import { useParams } from "react-router-dom";
 
 const UserDetailsComponent = () => {

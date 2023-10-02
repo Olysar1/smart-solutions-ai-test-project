@@ -1,5 +1,3 @@
 export const toggleIsLoading = () => {
-  return {
-    type: "TOGGLELOADING",
-  };
+  return { type: "TOGGLELOADING" };
 };
