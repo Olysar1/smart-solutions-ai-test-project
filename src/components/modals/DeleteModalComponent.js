@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideDeleteModal } from "../../redux/modals/modalsActions";
 import { useCallback, useEffect, useRef } from "react";
 import { deleteUser } from "../../redux/users/usersActions";
+import { toggleAlertDelete } from "../../redux/alerts/alertsActions";
 
 const DeleteModalComponent = () => {
   const targetedUser = useSelector((state) => state.modals.targetedUser);
@@ -17,6 +18,7 @@ const DeleteModalComponent = () => {
   const deleteTargetedUser = useCallback(() => {
     dispatch(deleteUser(targetedUser));
     closeModal();
+    dispatch(toggleAlertDelete(targetedUser.name));
   }, [targetedUser, closeModal, dispatch]);
 
   //handles closing modal when clicked outside the modal box

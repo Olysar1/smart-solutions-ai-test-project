@@ -7,6 +7,10 @@ import ErrorComponent from "./ErrorComponent";
 import LoadingComponent from "./LoadingComponent";
 import DeleteModalComponent from "./modals/DeleteModalComponent";
 import EditModalComponent from "./modals/EditModalComponent";
+import {
+  toggleAlertDelete,
+  toggleAlertEdited,
+} from "../redux/alerts/alertsActions";
 
 const UserListComponent = () => {
   const [error, setError] = useState(null);
@@ -18,7 +22,39 @@ const UserListComponent = () => {
     (state) => state.modals.editModalIsVisible
   );
   const users = useSelector((state) => state.users.users); //get users from redux store
+  const shouldAlertDelete = useSelector((state) => state.alerts.alertDeleted); // reads state to conditionally alert
+  const shouldAlertEdit = useSelector((state) => state.alerts.alertEdited); // reads state to conditionally alert
   const dispatch = useDispatch();
+
+  //handles alerts after closing each modal
+  useEffect(() => {
+    let deleteTimeoutId;
+    let editTimeoutId;
+
+    if (shouldAlertDelete.check) {
+      deleteTimeoutId = setTimeout(() => {
+        alert(`Successfully deleted user: ${shouldAlertDelete.targetName}`);
+        dispatch(toggleAlertDelete());
+      }, 150);
+    }
+
+    if (shouldAlertEdit.check) {
+      editTimeoutId = setTimeout(() => {
+        alert(`Successfully updated user: ${shouldAlertEdit.targetName}`);
+        dispatch(toggleAlertEdited());
+      }, 150);
+    }
+
+    return () => {
+      // Clear the timeouts
+      if (deleteTimeoutId) {
+        clearTimeout(deleteTimeoutId);
+      }
+      if (editTimeoutId) {
+        clearTimeout(editTimeoutId);
+      }
+    };
+  }, [dispatch, shouldAlertDelete, shouldAlertEdit]);
 
   //get the users list only if store does not have it already
   useEffect(() => {

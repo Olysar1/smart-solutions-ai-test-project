@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideEditModal } from "../../redux/modals/modalsActions";
 import { updateUser } from "../../redux/users/usersActions";
 import { isValid } from "../../utils/validator";
+import { toggleAlertEdited } from "../../redux/alerts/alertsActions";
 
 const EditModalComponent = () => {
   const [newName, setNewName] = useState("");
@@ -41,6 +42,7 @@ const EditModalComponent = () => {
       };
       dispatch(updateUser(updatedUser));
       closeModal();
+      dispatch(toggleAlertEdited(targetedUser.name));
     }
   }, [newName, newEmail, newCity, targetedUser, closeModal, dispatch]);
 

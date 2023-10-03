@@ -9,6 +9,7 @@ const UsersTable = () => {
   const [to, setTo] = useState(usersPerPage);
 
   const goPage = (page) => {
+    // nandle changing pages
     if (page === "next") {
       setFrom((prevState) => prevState + usersPerPage);
       setTo((prevState) => prevState + usersPerPage);
